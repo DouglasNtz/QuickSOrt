@@ -73,15 +73,13 @@ pub fn randomized_quick_sort<T: PartialOrd + Copy>(v: &mut Vec <T>) {
     let mut left = Vec::<T>::new();
     let mut right = Vec::<T>::new();
 
-    // As próximas 3 linhas são a parte randdômica
+    // As próximas 3 linhas são a parte randômica
 
     let k = v.len();
 
     let i = rand::random::<usize>() % k;
 
-    v.swap(i, k - 1);
-
-    let pivot = v.pop().unwrap();
+    let pivot = v.remove(i);
 
     while let Some(x) = v.pop() {
 
