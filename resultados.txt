@@ -1,10 +1,15 @@
 Function: Quick_Sort
 Número de experimentos: 100
 Tamanho da lista de números: 5000
-Tempo total: 57.813175ms
+Tempo total: 56.113028ms
 
 Function: Stable_Quick_Sort
 Número de experimentos: 100
 Tamanho da lista de números: 5000
-Tempo total: 78.681023ms
+Tempo total: 74.390265ms
+
+Function: Randomized_Quick_Sort
+Número de experimentos: 100
+Tamanho da lista de números: 5000
+Tempo total: 55.566885ms
 

@@ -61,3 +61,45 @@ pub fn stable_quick_sort<T: PartialOrd + Copy>(v: &mut Vec <T>) {
         v.push(x);
     }
 }
+
+use rand;
+
+pub fn randomized_quick_sort<T: PartialOrd + Copy>(v: &mut Vec <T>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<T>::new();
+    let mut right = Vec::<T>::new();
+
+    // As próximas 3 linhas são a parte randdômica
+
+    let k = v.len();
+
+    let i = rand::random::<usize>() % k;
+
+    v.swap(i, k - 1);
+
+    let pivot = v.pop().unwrap();
+
+    while let Some(x) = v.pop() {
+
+        if x <= pivot {
+            left.push(x);
+        } else {
+            right.push(x)
+        }
+    }
+
+    crate::quick_sort(&mut left);
+
+    crate::quick_sort(&mut right);
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
