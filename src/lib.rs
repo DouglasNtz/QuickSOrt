@@ -94,6 +94,42 @@ pub fn quick_sort_natural_stable<T: PartialOrd + Copy>(v: &mut Vec <T>) {
 
 }
 
+pub fn quick_sort_natural_stable_fast<T: PartialOrd + Copy>(v: &mut Vec <T>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<T>::new();
+    let mut right = Vec::<T>::new();
+
+    let pivot = v.pop().unwrap();
+
+    while let Some(x) = v.pop() {
+
+        if x <= pivot {
+            left.push(x);
+        } else {
+            right.push(x);
+        }
+    }
+
+    left.reverse();
+
+    right.reverse();
+
+    quick_sort_natural_stable_fast(&mut left);
+
+    quick_sort_natural_stable_fast(&mut right);
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
+
 pub fn quick_sort_natural_stable_proof_stability<T: PartialOrd + Copy>(v: &mut Vec <(T, usize)>) {
 
     if v.len() <= 1 {
@@ -117,6 +153,42 @@ pub fn quick_sort_natural_stable_proof_stability<T: PartialOrd + Copy>(v: &mut V
     quick_sort_natural_stable_proof_stability(&mut left);
 
     quick_sort_natural_stable_proof_stability(&mut right);
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
+
+pub fn quick_sort_natural_stable_fast_proof_stability<T: PartialOrd + Copy>(v: &mut Vec <(T, usize)>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<(T, usize)>::new();
+    let mut right = Vec::<(T, usize)>::new();
+
+    let pivot = v.pop().unwrap();
+
+    while let Some(x) = v.pop() {
+
+        if x.0 <= pivot.0 {
+            left.push(x);
+        } else {
+            right.push(x);
+        }
+    }
+
+    left.reverse();
+
+    right.reverse();
+
+    quick_sort_natural_stable_fast_proof_stability(&mut left);
+
+    quick_sort_natural_stable_fast_proof_stability(&mut right);
 
     v.append(&mut left);
 
