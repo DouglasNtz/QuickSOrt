@@ -62,6 +62,71 @@ pub fn stable_quick_sort<T: PartialOrd + Copy>(v: &mut Vec <T>) {
     }
 }
 
+pub fn quick_sort_natural_stable<T: PartialOrd + Copy>(v: &mut Vec <T>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<T>::new();
+    let mut right = Vec::<T>::new();
+
+    let pivot = v.pop().unwrap();
+
+    while let Some(x) = v.pop() {
+
+        if x <= pivot {
+            left.insert(0, x);  // O insert é muito mais lento que o push, pois realoca todas as posições
+        } else {
+            right.insert(0, x);
+        }
+    }
+
+    quick_sort_natural_stable(&mut left);
+
+    quick_sort_natural_stable(&mut right);
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
+
+pub fn quick_sort_natural_stable_proof_stability<T: PartialOrd + Copy>(v: &mut Vec <(T, usize)>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<(T, usize)>::new();
+    let mut right = Vec::<(T, usize)>::new();
+
+    let pivot = v.pop().unwrap();
+
+    while let Some(x) = v.pop() {
+
+        if x.0 <= pivot.0 {
+            left.insert(0, x);
+        } else {
+            right.insert(0, x);
+        }
+    }
+
+    quick_sort_natural_stable_proof_stability(&mut left);
+
+    quick_sort_natural_stable_proof_stability(&mut right);
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
+
+
 use rand;
 
 pub fn randomized_quick_sort<T: PartialOrd + Copy>(v: &mut Vec <T>) {
