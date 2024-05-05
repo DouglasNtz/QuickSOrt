@@ -227,9 +227,89 @@ pub fn randomized_quick_sort<T: PartialOrd + Copy>(v: &mut Vec <T>) {
         }
     }
 
-    crate::quick_sort(&mut left);
+    randomized_quick_sort(&mut left);
 
-    crate::quick_sort(&mut right);
+    randomized_quick_sort(&mut right);
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
+
+pub fn randomized_quick_sort_natural_stable<T: PartialOrd + Copy>(v: &mut Vec <T>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<T>::new();
+    let mut right = Vec::<T>::new();
+
+    // As próximas 3 linhas são a parte randômica
+
+    let k = v.len();
+
+    let i = rand::random::<usize>() % k;
+
+    let pivot = v[i];
+
+    for (j, &x) in v.iter().enumerate() {
+
+        if (x <= pivot && j < i) || (x < pivot) {
+            left.push(x);
+        } else if (x >= pivot && j > i) || (x > pivot) {
+            right.push(x)
+        }
+    }
+
+    randomized_quick_sort_natural_stable(&mut left);
+
+    randomized_quick_sort_natural_stable(&mut right);
+
+    v.clear();
+
+    v.append(&mut left);
+
+    v.push(pivot);
+
+    v.append(&mut right);
+
+}
+
+pub fn randomized_quick_sort_natural_stable_proof_stability<T: PartialOrd + Copy>(v: &mut Vec <(T, usize)>) {
+
+    if v.len() <= 1 {
+        return;
+    }
+
+    let mut left = Vec::<(T, usize)>::new();
+    let mut right = Vec::<(T, usize)>::new();
+
+    // As próximas 3 linhas são a parte randômica
+
+    let k = v.len();
+
+    let i = rand::random::<usize>() % k;
+
+    let pivot = v[i];
+
+    for (j, &x) in v.iter().enumerate() {
+
+        if (x.0 <= pivot.0 && j < i) || (x.0 < pivot.0) {
+            left.push(x);
+        } else if (x.0 >= pivot.0 && j > i) || (x.0 > pivot.0) {
+            right.push(x)
+        }
+    }
+
+    randomized_quick_sort_natural_stable_proof_stability(&mut left);
+
+    randomized_quick_sort_natural_stable_proof_stability(&mut right);
+
+    v.clear();
 
     v.append(&mut left);
 
